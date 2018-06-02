@@ -18,7 +18,7 @@ securityDefinitions:
 paths:
   /messages:
     get:
-      summary: "Get list paginated messages optionaly filtered by state"
+      summary: "Get list paginated messages optionally filtered by state"
       description: "Multiple status values can be provided with comma separated strings"
       operationId: "getMessages"
       produces:
