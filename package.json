@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/Volland/mail-box-demo/issues"
   },
-  "homepage": "https://github.com/Volland/mail-box-demo#readme"
+  "homepage": "https://github.com/Volland/mail-box-demo#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-basic-auth": "^1.1.5",
+    "express-pino-logger": "^3.0.1",
+    "pino": "^4.17.3",
+    "swagger-ui-express": "^3.0.9",
+    "yamljs": "^0.3.0",
+    "yargs": "^11.0.0"
+  }
 }
