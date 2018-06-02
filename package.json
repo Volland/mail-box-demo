@@ -17,12 +17,19 @@
   },
   "homepage": "https://github.com/Volland/mail-box-demo#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-basic-auth": "^1.1.5",
     "express-pino-logger": "^3.0.1",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
     "pino": "^4.17.3",
+    "sequelize": "^4.37.10",
     "swagger-ui-express": "^3.0.9",
     "yamljs": "^0.3.0",
     "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^4.0.0"
   }
 }
