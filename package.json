@@ -1,0 +1,19 @@
+{
+  "name": "oberlo-mail-box",
+  "version": "0.0.0",
+  "description": "A local firm is building a small E-mail client to manage their internal messaging. You have been asked to implement a basic mailbox API in which the provided messages are listed. Each message can be marked as read and you can archive single messages.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Volland/mail-box-demo.git"
+  },
+  "keywords": [],
+  "author": "Volodymyr Pavlyshyn",
+  "bugs": {
+    "url": "https://github.com/Volland/mail-box-demo/issues"
+  },
+  "homepage": "https://github.com/Volland/mail-box-demo#readme"
+}
