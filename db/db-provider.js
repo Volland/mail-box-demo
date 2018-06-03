@@ -10,9 +10,8 @@ const ajv = new Ajv();
 const itemShema = require('./jsonshemas/message-item');
 
 
-const query = (sql, params) => {
-    pool.query(sql, params);
-};
+const query = (sql, params) => pool.query(sql, params);
+
 
 const parseJsonFile = file => {
     try {
