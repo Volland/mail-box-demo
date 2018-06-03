@@ -1,0 +1,5 @@
+FROM alpine:latest
+MAINTAINER Volodymyr Pavlyshyn <team-sos@zalando.de>
+
+RUN apk update && apk add --no-cache postgresql-client=10.4-r0
+CMD echo "CREATE DATABASE mailboxdev;" | PGPASSWORD=postgres psql -h local-db -p 5432 -U postgres -f -

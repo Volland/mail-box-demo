@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mail-box-api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_HOST=local-db
+      - CONFIG_ENV=dev
+    depends_on:
+      - local-db
+  local-db:
+    image: "postgres:10.4-alpine"
+    ports:
+      - "5432:5432"
+  setup-db:
+    build:
+      context: .
+      dockerfile: Dockerfile-local-db-init
+    depends_on:
+      - local-db

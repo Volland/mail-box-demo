@@ -1,0 +1,21 @@
+# IDEs
+.idea
+# Logs
+logs
+*.log
+# Tests
+test
+# Misc
+docs
+
+README.md
+Dockerfile
+docker-compose.yml
+Dockerfile-local-db-init
+credentials
+# Dotfiles
+.dockerignore
+.git
+.github
+.gitignore
+.npmignore
