@@ -20,6 +20,7 @@
     "express": "^4.16.3",
     "express-basic-auth": "^1.1.5",
     "express-pino-logger": "^3.0.1",
+    "pg": "^7.4.3",
     "pino": "^4.17.3",
     "swagger-ui-express": "^3.0.9",
     "yamljs": "^0.3.0",
