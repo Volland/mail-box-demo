@@ -1,0 +1,53 @@
+{
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "uid": {
+      "$id": "/properties/uid",
+      "type": "string",
+      "required": false
+    },
+    "sender": {
+      "$id": "/properties/sender",
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 60,
+      "required": true,
+      "pattern": "\\[A..Z,a..z]+\\s\\[a..z]+",
+      "title": "The Sender Schema",
+      "examples": [
+        "Ernest Hemingway"
+      ]
+
+    },
+    "subject": {
+      "$id": "/properties/subject",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "title": "The Subject Schema ",
+      "default": "",
+      "examples": [
+        "animals"
+      ]
+    },
+    "message": {
+      "$id": "/properties/message",
+      "type": "string",
+      "required": true,
+      "minLength": 1,
+      "title": "The Message Schema ",
+    },
+    "time_sent": {
+      "$id": "/properties/time_sent",
+      "type": "integer",
+      "title": "The Time_sent Schema ",
+      "minimum": 0,
+      "examples": [
+        1459239867
+      ]
+    }
+  }
+}
