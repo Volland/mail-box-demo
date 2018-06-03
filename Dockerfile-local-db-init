@@ -1,5 +1,9 @@
 FROM alpine:latest
 MAINTAINER Volodymyr Pavlyshyn <team-sos@zalando.de>
 
-RUN apk update && apk add --no-cache postgresql-client=10.4-r0
+RUN apk update && apk add --no-cache postgresql-client=10.4-r0 jq
+COPY ./db/data/dump-data.json .
+COPY ./db/scripts/schema.sql .
 CMD echo "CREATE DATABASE mailboxdev;" | PGPASSWORD=postgres psql -h local-db -p 5432 -U postgres -f -
+CMD PGPASSWORD=postgres psql -h local-db -p 5432 -d mailboxdev -U postgres -f schema.sql
+CMD cat dump-data.json | jq  -r '.messages[] | [.sender, .subject, .message, .time_sent] | @csv' | psql -h localhost -p 5432 -d mailboxdev -U postgres -c "COPY public.messages (sender, subject, message, send_at) from stdin  with (format CSV )"
