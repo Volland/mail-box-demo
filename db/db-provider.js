@@ -1,5 +1,11 @@
 const { Pool } = require('pg');
-const pool = new Pool();
+const pool = new Pool({
+    host: 'localhost',
+    user: 'postgres',
+    database: 'mailboxdev',
+    password:'postgres',
+    port: 5432,
+});
 const copyFrom = require('pg-copy-streams').from;
 const streams = require('memory-streams');
 const Ajv = require('ajv');
@@ -7,7 +13,7 @@ const fs = require('fs');
 const pino = require('pino')();
 
 const ajv = new Ajv();
-const itemShema = require('./jsonshemas/message-item');
+const itemShema ={}; //require('./jsonshemas/message-item');
 
 
 const query = (sql, params) => pool.query(sql, params);
@@ -53,6 +59,6 @@ const exportMessagesFromJson = file => {
 };
 
 
-export.module = {
+module.exports = {
     query
 };

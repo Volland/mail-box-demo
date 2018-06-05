@@ -48,5 +48,5 @@ jq - really save me a lot of time and replace a bunch of helper scripts
  It is allow to reuse a same db pool and do a error handling and db work in a same place.
  
  One more note . for data validation I use a json scheme that allow to filter out values from file before we get to db.
- [exportMessagesFromJson](./db/db-provider.js) 
+ [exportMessagesFromJson](../db/db-provider.js) 
  

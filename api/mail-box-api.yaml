@@ -33,7 +33,6 @@ paths:
             type: string
             enum:
             - archived
-            - notreaded
             - all
             default: all
         - in: query
@@ -86,10 +85,10 @@ paths:
         schema:
           $ref: "#/definitions/MessageStatus"
       responses:
-        400:
-          description: "Invalid ID supplied"
-          schema:
-            $ref: "#/definitions/Problem"
+        200:
+          description: 'Message status updated'
+        204:
+          description: 'Message was unchanged'
         404:
           description: "Massage not found"
           schema:
@@ -98,6 +97,7 @@ paths:
           description: "Validation exception"
           schema:
             $ref: "#/definitions/Problem"
+
 definitions:
   MessageStatus:
     type: object
@@ -113,6 +113,8 @@ definitions:
         properties:
           sender:
             type: string
+            minLength: 3
+            maxLength: 200
             pattern: ^\w{2}\s+\w{2}
             description: |
               The Name Sername of the message author
@@ -120,7 +122,7 @@ definitions:
           subject:
             type: string
             minLength: 3
-            maxLength: 100
+            maxLength: 200
             description: |
              Short subject
           message:
