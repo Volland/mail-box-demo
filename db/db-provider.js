@@ -12,10 +12,13 @@ const Ajv = require('ajv');
 const fs = require('fs');
 const pino = require('pino')();
 
+
 const ajv = new Ajv();
 const itemShema ={}; //require('./jsonshemas/message-item');
 
-
+pool.on('query', function (sql) {
+    pino.trace(sql);
+});
 const query = (sql, params) => pool.query(sql, params);
 
 

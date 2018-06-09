@@ -5,8 +5,9 @@ CREATE TABLE IF NOT EXISTS public.messages
     send_at INTEGER NOT NULL,
     sender varchar(200) NOT NULL,
     message text NOT NULL,
-    is_readed  boolean NOT NULL DEFAULT FALSE,
+    is_read  boolean NOT NULL DEFAULT FALSE,
     is_archived boolean NOT NULL DEFAULT FALSE
+
 );
 
 CREATE INDEX IF NOT EXISTS index_messages_on_id ON public.messages USING btree (id);
