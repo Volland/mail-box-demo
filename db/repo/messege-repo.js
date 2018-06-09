@@ -23,7 +23,7 @@ const getMessageById = id => {
         throw Error('Valid Id is required ')
     }
    return query(sqlQueries.get.item, [id]).then(data => {
-       
+
        if (data.rowCount > 1) {
 
            throw Error('Multi row result');
@@ -37,6 +37,8 @@ const getMessageById = id => {
        return data.rows[0];
    })
 };
+const convertUpdates = data => ({updated : data.rowCount > 0 , affected: data.rowCount});
+
 const updateStatus = (id , isRead, isArchived) => {
     if (!id || !(id * 1)) {
         throw Error('Valid Id is required ')
@@ -49,13 +51,13 @@ const updateStatus = (id , isRead, isArchived) => {
         throw Error ('No Update arguments provided ')
     }
     if (hasIsRead && hasIsArchived) {
-        return query(sqlQueries.update.status, [id, isRead, isArchived])
+        return query(sqlQueries.update.status, [id, isRead, isArchived]).then(convertUpdates)
     }
     if(hasIsRead) {
-        return query(sqlQueries.update.isRead, [id, isRead])
+        return query(sqlQueries.update.isRead, [id, isRead]).then(convertUpdates)
     }
     if (hasIsArchived) {
-        return query(sqlQueries.update.isArchived, [id, isArchived])
+        return query(sqlQueries.update.isArchived, [id, isArchived]).then(convertUpdates)
     }
 };
 
@@ -78,7 +80,7 @@ const  sqlQueries = {
         },
         archived:{
             firstPage: `select id, subject, sender, message, send_at, is_read
-                      from messages 
+                      from public.messages 
                       where 
                          is_archived = TRUE 
                          and send_at < extract(epoch from now() at time zone 'utc') 
@@ -93,15 +95,15 @@ const  sqlQueries = {
                               limit $1`
         },
         item : `select id, subject, sender, message,  send_at , is_read 
-                      from messages 
+                      from public.messages 
                       where id = $1`
     },
     update : {
-        isRead:`update public.message set is_read = $2 
+        isRead:`update public.messages set is_read = $2 
                       where id = $1 AND is_read <> $2`,
-        isArchived: `update public.message set is_archived = $2 , is_read = $3
+        isArchived: `update public.messages set is_archived = $2 , is_read = $3
                            where id = $1 AND is_archived <> $2`,
-        status: `update public.message set is_archived = $2 
+        status: `update public.messages set is_archived = $2 
                            where id = $1 AND (is_archived <> $2 or is_read <> $3)`
 
     }
