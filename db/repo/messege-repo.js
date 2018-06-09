@@ -19,14 +19,27 @@ const getMessagesPaginated = (limit , filter , fromId , fromStamp) => {
 
 };
 const getMessageById = id => {
-    if(!id) {
-        throw Error('Id is required ')
+    if(!id || !(id * 1)) {
+        throw Error('Valid Id is required ')
     }
-   return query(sqlQueries.get.item, [id])
+   return query(sqlQueries.get.item, [id]).then(data => {
+       
+       if (data.rowCount > 1) {
+
+           throw Error('Multi row result');
+       }
+
+       if (data.rowCount === 0) {
+
+           return null;
+       }
+
+       return data.rows[0];
+   })
 };
 const updateStatus = (id , isRead, isArchived) => {
-    if (!id) {
-        throw Error('Id is required ')
+    if (!id || !(id * 1)) {
+        throw Error('Valid Id is required ')
     }
 
     const hasIsRead = isBool(isRead) ;
