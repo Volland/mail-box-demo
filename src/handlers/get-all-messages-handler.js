@@ -35,7 +35,7 @@ const getMessageHandler = (req, res) => {
     }).catch(e => {
         pino.error('Failed to get paginated messages ', {error :e});
         return res.status(500).json({
-            type : `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400`,
+            type : `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500`,
             title: 'Failed to get paginated messages',
             status: 500,
             details:`Failed to get paginated messages for params : ${JSON.stringify(query)}`

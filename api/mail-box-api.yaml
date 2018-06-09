@@ -63,6 +63,33 @@ paths:
           schema:
             $ref: "#/definitions/Problem"
   /messages/{id}:
+    get:
+      summary: "set archived or read fields "
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: number
+        format: int64
+        required: true
+        minimum: 1
+      responses:
+        200:
+          description: 'Message status updated'
+        204:
+          description: 'Message was unchanged'
+        404:
+          description: "Massage not found"
+          schema:
+            $ref: "#/definitions/Problem"
+        405:
+          description: "Validation exception"
+          schema:
+            $ref: "#/definitions/Problem"
+
+
     patch:
       summary: "set archived or read fields "
       description: ""
