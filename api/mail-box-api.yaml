@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: ""
+  description: "Demo API "
   version: "0.0.1"
   title: "mail box"
   contact:
@@ -29,12 +29,11 @@ paths:
           name: q
           description: |
             Status values that need to be considered for filter
-          shema:
-            type: string
-            enum:
+          type: string
+          enum:
             - archived
             - all
-            default: all
+          default: all
         - in: query
           name: continue
           type: string
@@ -44,17 +43,17 @@ paths:
         - in: query
           name: limit
           type: integer
+          minimum: 1
+          maximum: 100
           description: |
             Pagination parameter that size op page
-          default: 50
-
+          default: 10
       responses:
         200:
           description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Message"
+            $ref: '#/definitions/MessagesResponse'
+
         401:
           description: Not autorised request
           schema:
@@ -130,11 +129,26 @@ definitions:
             minLength: 3
             description: |
              The body of the message
-          time_sent:
+          send_at:
             type: integer
             format : int64
             description: |
               epoch time stamp of message send. All the date is Unix  UTC time.for more https://en.wikipedia.org/wiki/Unix_time
+  MessagesResponse:
+    type: object
+    properties:
+      messages:
+        type: "array"
+        items:
+          $ref: "#/definitions/Message"
+      next:
+        type: string
+        format: uri
+      self:
+        type: string
+        format: uri
+      limit:
+        type: integer
   Problem:
     type: object
     properties:
