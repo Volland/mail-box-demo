@@ -15,7 +15,7 @@ const getMessage = (id) => getMessageById(id).then(result => result);
 
 const allowedPathKeys = ['is_read', 'is_archived'];
 const updateMessage = (id , status) => {
-    console.log('server:', id,status);
+    console.log('server:', id, status);
 
     if(!status) {
 
@@ -24,7 +24,7 @@ const updateMessage = (id , status) => {
 
     const notAllowedFields  = Object.keys(status).filter(k => allowedPathKeys.indexOf(k) === -1);
 
-    if(!status) {
+    if(notAllowedFields.length > 0) {
 
         return Promise.reject({errors: [`Not allowed fields ${notAllowedFields.join(' , ')}`]});
     }
