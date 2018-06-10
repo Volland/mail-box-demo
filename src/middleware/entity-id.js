@@ -1,6 +1,5 @@
 module.exports  = (req, res, next) => {
     const id = req.params.id * 1;
-    console.log('entity middleware ', id);
     if (isNaN(id) || id <= 0) {
         return res.status(405).json({
             type: `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405`,

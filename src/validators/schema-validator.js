@@ -17,16 +17,16 @@ const init = (schemaFolder)  => {
     fs.readdirSync(path.resolve(__dirname,schemaFolder)).forEach(file => {
         const fullPathSchema = path.resolve(fullSchemaFolder, file);
         if (isJson(fullPathSchema)) {
-            console.log(fullPathSchema);
+
              try {
-                const content = fs.readFileSync(fullPathSchema, 'utf8');
+                let content = fs.readFileSync(fullPathSchema, 'utf8');
                 try {
-                    const schemaObject = JSON.parse(content);
+                    let schemaObject = JSON.parse(content);
                     try {
                         ajv.addSchema(schemaObject, getSchemaName(fullPathSchema));
                     }
                     catch (registere) {
-                        pino.error('Failed to register schema file  ', {error: eparse});
+                        pino.error('Failed to register schema file  ', {error: registere});
                     }
                 }
                 catch (eparse) {
@@ -42,6 +42,7 @@ const init = (schemaFolder)  => {
 init(defaultShemaFolder);
 
 const validate = (shemaName , data) => {
+
     const isValid = ajv.validate(shemaName, data);
     return {
         isValid: isValid,
@@ -50,7 +51,3 @@ const validate = (shemaName , data) => {
     }
 };
 module.exports = validate;
-
-/**
- * curl -X PATCH "http://localhost:8080/api/messages/6" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"is_read\": true, \"is_archived\": true}"
-*/

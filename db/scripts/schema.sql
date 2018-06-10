@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS public.messages
 (
     id BIGSERIAL PRIMARY KEY NOT NULL,
     subject varchar(200) NOT NULL,
-    send_at INTEGER NOT NULL,
+    send_at bigint NOT NULL,
     sender varchar(200) NOT NULL,
     message text NOT NULL,
     is_read  boolean NOT NULL DEFAULT FALSE,

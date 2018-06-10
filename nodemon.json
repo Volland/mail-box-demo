@@ -16,8 +16,7 @@
     "LOG_LEVEL": "debug",
     "NODE_ENV": "development",
     "CREDENTIALS_DIR": "./credentials",
-    "WORKERS": 1,
-
+    "WORKERS": 1
   },
   "restartable": "rs",
   "exec": "npm start"

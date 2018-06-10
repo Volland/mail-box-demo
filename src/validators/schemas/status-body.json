@@ -1,5 +1,5 @@
 {
-  "$id": "http://mail-box-demo/status-body.json",
+  "$id": "http://mail-box-demo/schema/status-body.json",
   "type": "object",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
