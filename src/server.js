@@ -1,6 +1,6 @@
 const express = require('express');
-const pinoLoggerMiddleware = require('express-pino-logger');
 const pino = require('pino')();
+const pinoLoggerMiddleware = require('express-pino-logger');
 const yargs = require('yargs');
 const apiRoutes = require('./routes/api-routes');
 

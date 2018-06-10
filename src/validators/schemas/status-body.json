@@ -1,0 +1,23 @@
+{
+  "$id": "http://mail-box-demo/status-body.json",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "is_read": {
+      "$id": "/properties/is_read",
+      "type": "boolean",
+      "title": "The Is_read Schema "
+    },
+    "is_archived": {
+      "$id": "/properties/is_archived",
+      "type": "boolean",
+      "title": "The Is_archived Schema "
+    }
+  },
+  "additionalProperties": false,
+  "anyOf": [
+    {"required": ["is_read", "is_archived"]},
+    {"required": ["is_read"]},
+    {"required": ["is_archived"]}
+  ]
+}

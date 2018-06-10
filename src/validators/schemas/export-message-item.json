@@ -1,12 +1,12 @@
 {
-  "$id": "http://example.com/example.json",
+  "$id": "http://mail-box-demo/export-message-item.json",
   "type": "object",
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
     "uid": {
       "$id": "/properties/uid",
-      "type": "string",
+      "type": "integer",
       "required": false
     },
     "sender": {
@@ -38,7 +38,7 @@
       "type": "string",
       "required": true,
       "minLength": 1,
-      "title": "The Message Schema ",
+      "title": "The Message Schema "
     },
     "time_sent": {
       "$id": "/properties/time_sent",
