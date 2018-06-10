@@ -24,8 +24,6 @@ But we sill allow to tune a page size (it could give a benefit for mobile consum
 
 ### Idea
  Client receive a link to next page a meta data together with an arbitrary parameters 
- 
-  
  On a message Table we already have a send at times temp. so it is perfectly fine.
  We need one more auto increment sequence field. I see that Id could to a work quite well.
   

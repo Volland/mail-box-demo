@@ -15,7 +15,7 @@ const getMessagesPaginated = (limit , filter , fromId , fromStamp) => {
         .then(data => ({
            queryParams: {limit , filter , fromId , fromStamp},
            data : data.rows
-    })).catch(e => { pino.error("Repo : failure on get paginated messages ", { error:e }); throw e})
+    })).catch(e => {console.log(e); pino.error("Repo : failure on get paginated messages ", { error:e }); throw e})
 
 };
 const getMessageById = id => {

@@ -1,6 +1,4 @@
-#!/bin/bash
-# wait-for-postgres.sh
-
+#!/bin/sh
 set -e
 
 host="$1"

@@ -1,11 +1,16 @@
 FROM alpine:latest
-MAINTAINER Volodymyr Pavlyshyn <team-sos@zalando.de>
+MAINTAINER Volodymyr Pavlyshyn <pavlyshyn@gmail.com>
 
 RUN apk update && apk add --no-cache postgresql-client=10.4-r0 jq
+
+RUN mkdir -p /opt/mail-box-db
+WORKDIR /opt/mail-box-db
 COPY ./db/data/dump-data.json .
 COPY ./db/scripts/schema.sql .
 COPY ./db/scripts/wait-for.sh .
 COPY ./db/scripts/export.sh .
+
 RUN ["chmod", "+x", "./wait-for.sh"]
 RUN ["chmod", "+x", "./export.sh"]
-CMD ["./wait-for.sh" , "local-db", "./export.sh", "local-db", "./schema.sql", "./dump-data.json"]
+RUN ["ls", "-aux", "."]
+CMD ["./wait-for.sh" , "localdb", "./export.sh", "localdb", "schema.sql", "dump-data.json"]
