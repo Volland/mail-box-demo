@@ -41,7 +41,7 @@ const convertUpdates = data => ({updated : data.rowCount > 0 , affected: data.ro
 
 const updateStatus = (id , isRead, isArchived) => {
     if (!id || !(id * 1)) {
-        throw Error('Valid Id is required ')
+        throw Error('Valid Id is required')
     }
 
     const hasIsRead = isBool(isRead) ;
@@ -59,6 +59,13 @@ const updateStatus = (id , isRead, isArchived) => {
     if (hasIsArchived) {
         return query(sqlQueries.update.isArchived, [id, isArchived]).then(convertUpdates)
     }
+};
+
+const createMessage = (message) => {
+    return query(sqlQueries.create,
+        [message.subject, message.sender,
+        message.message, message.send_at ,
+        message.is_read, message.is_archived]).then(result => result.rows[0])
 };
 
 const isBool = x => typeof(x) == typeof(true);
@@ -94,7 +101,7 @@ const  sqlQueries = {
                               order by send_at desc, id desc 
                               limit $1`
         },
-        item : `select id, subject, sender, message,  send_at , is_read 
+        item : `select id, subject, sender, message,  send_at , is_read , is_archived
                       from public.messages 
                       where id = $1`
     },
@@ -106,10 +113,15 @@ const  sqlQueries = {
         status: `update public.messages set is_archived = $2 
                            where id = $1 AND (is_archived <> $2 or is_read <> $3)`
 
-    }
+    },
+    create : ` insert into public.messages 
+            (subject, sender, message, send_at , is_read, is_archived)
+            values 
+            ($1, $2, $3, $4, $5, $6) 
+         returning id`
 };
 
 module.exports = {
-    getMessagesPaginated, getMessageById, updateStatus
+    getMessagesPaginated, getMessageById, updateStatus, createMessage
 };
 

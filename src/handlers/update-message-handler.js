@@ -1,4 +1,5 @@
 const { updateMessage, getMessage } = require('../services/message');
+const url = require('url');
 const pino = require('pino')();
 
 const updateMessageHandler = (req, res) => {
@@ -15,7 +16,11 @@ const updateMessageHandler = (req, res) => {
     }
 
     return updateMessage(id, status).then(result => {
-        res.location(req.originalUrl);
+        res.location(url.format({
+            protocol: req.protocol,
+            host: req.get('host'),
+            pathname: req.originalUrl
+        }));
         if(result.affected) {
             return getMessage(req.params.id).then(dataResult => {
                 return res.status(200).json(dataResult);
@@ -26,7 +31,6 @@ const updateMessageHandler = (req, res) => {
             res.status(304).send();
         }
     }).catch(e => {
-        console.log(e);
         if(e.errors && e.errors.length > 0) {
             return res.status(405).json({
                 type : `https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405`,

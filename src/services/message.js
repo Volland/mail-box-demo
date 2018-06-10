@@ -1,5 +1,6 @@
-const { getMessagesPaginated, getMessageById, updateStatus } =require("../../db/repo/messege-repo.js");
+const { getMessagesPaginated, getMessageById, updateStatus, createMessage } =require("../../db/repo/messege-repo.js");
 const { createPaginator } = require("./paginator-helper");
+const normaliseMessage = require('../converters/request-to-normalized-message');
 const paginator = createPaginator('id', 'send_at');
 
 const getMessages = (limit, filterType, cursor) => {
@@ -13,10 +14,8 @@ const getMessages = (limit, filterType, cursor) => {
 };
 const getMessage = (id) => getMessageById(id).then(result => result);
 
-const allowedPathKeys = ['is_read', 'is_archived'];
 const updateMessage = (id , status) => {
-    console.log('server:', id, status);
-
+    const allowedPathKeys = ['is_read', 'is_archived'];
     if(!status) {
 
         return Promise.reject({errors : ['Empty object']})
@@ -32,6 +31,10 @@ const updateMessage = (id , status) => {
     return updateStatus(id, status.is_read, status.is_archived)
 };
 
+const newMessage = (message) => {
+   return createMessage(normaliseMessage(message))
+};
+
 module.exports = {
-    getMessages, getMessage, updateMessage
+    getMessages, getMessage, updateMessage, newMessage
 };

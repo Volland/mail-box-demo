@@ -1,20 +1,20 @@
 {
-  "$id": "http://mail-box-demo/schema/export-message-item.json",
+  "$id": "http://mail-box-demo/schema/create-message-item.json",
   "type": "object",
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "uid": {
-      "$id": "/properties/uid",
-      "type": "integer"
-    },
     "sender": {
       "$id": "/properties/sender",
       "type": "string",
       "minLength": 4,
       "maxLength": 200,
-      "pattern": "\\[A..Z,a..z]+\\s\\[a..z]+",
-      "title": "The Sender Schema"
+      "pattern": "[A..Za..z ]+",
+      "title": "The Sender Schema",
+      "examples": [
+        "Ernest Hemingway"
+      ]
+
     },
     "subject": {
       "$id": "/properties/subject",
@@ -33,16 +33,26 @@
       "minLength": 1,
       "title": "The Message Schema "
     },
-    "time_sent": {
+    "send_at": {
       "$id": "/properties/time_sent",
       "type": "integer",
       "title": "The Time_sent Schema ",
-      "minimum": 0,
+      "minimum": 1,
       "examples": [
         1459239867
       ]
+    },
+    "is_read": {
+      "$id": "/properties/is_read",
+      "type": "boolean",
+      "title": "The Is_read Schema "
+    },
+    "is_archived": {
+      "$id": "/properties/is_archived",
+      "type": "boolean",
+      "title": "The Is_archived Schema "
     }
   },
-  "required": ["sender", "subject", "message", "time_sent"],
+  "required": ["sender","subject","message"],
   "additionalProperties": false
 }
