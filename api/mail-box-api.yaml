@@ -13,11 +13,13 @@ schemes:
 - "http"
 
 securityDefinitions:
-  mail-box-basic:
+  mailBoxBasic:
     type: basic
 paths:
   /messages:
     get:
+      security:
+        - mailBoxBasic: []
       summary: "Get list paginated messages optionally filtered by state"
       description: "Multiple status values can be provided with comma separated strings"
       operationId: "getMessages"
@@ -53,7 +55,6 @@ paths:
           description: "successful operation"
           schema:
             $ref: '#/definitions/MessagesResponse'
-
         401:
           description: Not autorised request
           schema:
@@ -62,8 +63,41 @@ paths:
           description: Not valid query
           schema:
             $ref: "#/definitions/Problem"
+    post:
+      security:
+        - mailBoxBasic: []
+      summary: "create a new message"
+      description: "Create new message . send data will be set automatically by server as same as statuses "
+      operationId: "getMessages"
+      produces:
+      - "application/json"
+      - "application/json+problem"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Message status fields read , archived"
+          required: true
+          schema:
+            $ref: "#/definitions/Message"
+      responses:
+        201:
+          headers:
+            location:
+              type: string
+              format: uri
+              description: 'Path to get created recourse'
+        401:
+          description: Not autorised request
+          schema:
+            $ref: "#/definitions/Problem"
+        405:
+          description: Not valid object
+          schema:
+            $ref: "#/definitions/Problem"
   /messages/{id}:
     get:
+      security:
+        - mailBoxBasic: []
       summary: "set archived or read fields "
       description: ""
       produces:
@@ -82,7 +116,7 @@ paths:
             location:
               type: string
               format: uri
-              description: 'Path to get updated resource'
+              description: 'Path to get updated resourse'
           schema:
             $ref: '#/definitions/MessagesResponse'
         202:
@@ -102,10 +136,10 @@ paths:
           description: "Validation exception"
           schema:
             $ref: "#/definitions/Problem"
-
-
     patch:
       summary: "set archived or read fields "
+      security:
+        - mailBoxBasic: []
       description: ""
       operationId: "pathMessage"
       consumes:
@@ -137,7 +171,6 @@ paths:
           description: "Validation exception"
           schema:
             $ref: "#/definitions/Problem"
-
 definitions:
   MessageStatus:
     type: object
