@@ -10,12 +10,12 @@
     "node_modules/"
   ],
   "env": {
-    "APP_PORT": 8080,
-    "METRICS_PORT": 8911,
-    "CONFIG_ENV": "local",
-    "LOG_LEVEL": "debug",
+    "LOG_LEVEL": "trace",
     "NODE_ENV": "development",
-    "CREDENTIALS_DIR": "./credentials",
+    "PGHOST": "localhost",
+    "PGDATABASE": "mailboxdev",
+    "PGUSER": "postgres",
+    "PGPASSWORD": "postgres",
     "WORKERS": 1
   },
   "restartable": "rs",

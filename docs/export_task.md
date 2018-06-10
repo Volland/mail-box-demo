@@ -13,7 +13,8 @@ It is possible to have export task quite mature with postgres copy command.
 Copy command is quite fast and optimised for bulk inserts. 
 
 ```postgresql
-COPY public.messages (sender, subject, message, send_at) from stdin  with (format CSV )
+COPY public.messages (send_at, sender, subject, message) from stdin  with (format CSV )
+
 ```
 
 The key challenge it is use CSV format by default. 
@@ -21,7 +22,7 @@ The key challenge it is use CSV format by default.
 We could use a jq - a small and handy tool . swiss knife for json.
 
 ``` bash
- jq  -r '.messages[] | [.sender, .subject, .message, .time_sent] | @csv'
+jq  -r '.messages[] | [.time_sent, .sender, .subject, .message ]  | @csv''
  
 ```
 
@@ -30,12 +31,20 @@ jq - really save me a lot of time and replace a bunch of helper scripts
  - .messages[] - select a root data element 
  - [.sender, .subject, .message, .time_sent]  - form array of picked values . define order 
  - @csv - csv filter ))
+
+One more thing 
+We assume that on real system messages came and stored on time flow. 
+So we want to sort messages by send_time column. it possible to do with jq but unix sort is more friendly folk 
+
+```bash
+sort -k1n 
+```
+It will sort first column using numerical sort.
  
- Lets assemble all together 
+Lets assemble all together 
  
  ```bash
- cat dump-data.json | jq  -r '.messages[] | [.sender, .subject, .message, .time_sent] | @csv' | psql -h localhost -p 5432 -d mailboxdev -U postgres -c "COPY public.messages (sender, subject, message, send_at) from stdin  with (format CSV )"
-
+ | jq  -r '.messages[] | [.time_sent, .sender, .subject, .message ]  | @csv' | sort -k1n  |  psql -h $1 -p 5432 -d mailboxdev -U postgres -c "COPY public.messages (send_at, sender, subject, message) from stdin  with (format CSV )"
 ```
  
  ### Code 
@@ -48,5 +57,5 @@ jq - really save me a lot of time and replace a bunch of helper scripts
  It is allow to reuse a same db pool and do a error handling and db work in a same place.
  
  One more note . for data validation I use a json scheme that allow to filter out values from file before we get to db.
- [exportMessagesFromJson](../db/db-provider.js) 
+ [exportMessagesFromJson](../db/export-task.js) 
  

@@ -5,12 +5,17 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DATABASE_HOST=local-db
       - CONFIG_ENV=dev
+      - DATABASE_URL=postgres://postgress:postgress@localdb:5432/mailboxdev
+      - PGHOST=localdb
+      - PGDATABASE=mailboxdev
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
     depends_on:
+      - localdb
       - setup-db
-      - local-db
-  local-db:
+
+  localdb:
     image: "postgres:10.4-alpine"
     ports:
       - "5432:5432"
@@ -19,4 +24,4 @@ services:
       context: .
       dockerfile: Dockerfile-local-db-init
     depends_on:
-      - local-db
+      - localdb
