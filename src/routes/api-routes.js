@@ -11,6 +11,7 @@ const createMessageHandler = require('../handlers/create-message-handler');
 
 const routes = server => {
     const apiRouter = express.Router();
+    apiRouter.use(authMiddleware);
     server.use('/api',apiRouter);
     apiRouter.get('/messages', getMessagesHandler);
     apiRouter.post('/messages', registerBodyValidator('create-message-item'), createMessageHandler);
