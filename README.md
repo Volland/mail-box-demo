@@ -51,7 +51,7 @@ We prefer manipulation over resource instead of action like api.
 |Show message | get messages/id |  http://localhost:8080/api/message/5|
 |Read message | patch messages/id | curl -u oberlo1:cool421 -X PATCH "http://localhost:8080/api/messages/5" -H "accept: application/json"  -H "Content-Type: application/json" -d "{ \"is_read\": true}" |
 |Archive message | patch messages/id | curl -u oberlo1:cool421 -X PATCH "http://localhost:8080/api/messages/5" -H "accept: application/json"  -H "Content-Type: application/json" -d "{ \"is_archived\": true}"|
-|----------------|-------------------|------------------|
+| -  | - | -|
 |Read & archive |  patch messages/id | curl -u oberlo1:cool421 -X PATCH "http://localhost:8080/api/messages/5" -H "accept: application/json"  -H "Content-Type: application/json" -d "{ \"is_archived\": true, \"is_read\": true}"|
 | create message| post  messages | curl -X POST "http://localhost:8080/api/messages" -H "accept: application/json" -H "authorization: Basic b29iZXJsbzE6Y29vbDQy" -H "Content-Type: application/json" -d "{  \"sender\": \"stephen hawking\", \"subject\": \"the short history of time \", \"message\": \"the history\"}"|
 
@@ -72,6 +72,66 @@ Operation statuses
 |not changed | 304|
 
  
-# Decision Log
+# Decisions 
+## Server side Technologies 
+It is classical Express  nodeJs based solution. On practise it is much faster an cheaper to use spring boot with spring but in this case 
+we will not have so much to discus. Spring cover perfectly crud rest with db and when JOOQ is used you even will get keyset pagination out of the box.
+If you want something fast use a spring. 
+So why i use node 
+   -  Non blocking 
+   - no types - is bad but some times you could go faster . You dont need DTO or layer value transfer objects if you have structure of data that make you happy
+   - JS is natural for me 
+   - fast api 
+## API first 
+First that i did is a swagger file . I take a look to few cool project like openapi framework that allow you to create logic and glue with you swagger 
+but all of this projects have a bit *magic* code generation.
+So I decide to still do a api first design but do not use a frameworks. 
+## JSON & Validation 
+So as you know json and js object are brothers. It could give a big boost for api. 
+I use declarative json schema for all request payload validation based on json schema. Less code more declarative way. 
 
+## Project structure 
+|class*| use  |
+|------|------|
+|handlers  | folks that process , request and generate response |
+|service| insulate a logic |
+| convector | map and transform request payload to internal structure |
+| middleware | standard express concept . Insulate reusable request processing parts |
+| repo | wrapper over db entity . allow to interact with storage 
+|provider | wrapper over pg pool . Hide complexity of DB communication |
+| route | map urls to handlers. glue all middleware and handlers |
+
+
+## Storage 
+I see that data are well structured . So relational DB is a good candidate. 
+It is easy to use and easy to find Devs.
+
+## ORM & migrations 
+Well . On long run you definitely need at list migration system.
+ORM - is overkill in our case , but it make a lot of manual work. 
+Pls use you DB power and do not hide it. 
+
+### Query builders
+I decide not to use any of them . Down side - You need to define full query and only with template mechanisms that ofered by Db server.
+Good part - you Understand how it is working. It is transparent.  
+
+## Export Task 
+[see separate doc](./docs/export_task.md)
+## pagination How To 
+[Pagination](./docs/pagination.md)
 # What next ....
+It is not production ready !!
+  -  I omit all topics about SRE . retries . smart error handling etc .
+  -  It is not clustered . So entire solution is single thread. But service is stateless. So it could be clustered and balanced vie PM2 or etc 
+  - Environment configuration. DB connection is configured over a ENV variables. to make it flexible it much better to have env agnostic configs 
+  - Deployment 
+  - Migrations 
+
+## Test 
+It is must have TDD or better BDD . I prefer spec level and e2e test .
+I have seen a lot 95% covered code but still a full of bugs. 
+I prefer a pact integration test and one more docker with 'stimulator' that send a real request over scenario an then check result and compare 
+dockerized DB.
+I still keen to do a popper tests. 
+ 
+ 

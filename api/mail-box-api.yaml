@@ -20,9 +20,8 @@ paths:
     get:
       security:
         - mailBoxBasic: []
-      summary: "Get list paginated messages optionally filtered by state"
-      description: "Multiple status values can be provided with comma separated strings"
-      operationId: "getMessages"
+      summary: "Get paginated list of messages optionally filtered by archived status"
+
       produces:
       - "application/json"
       - "application/json+problem"
@@ -67,7 +66,7 @@ paths:
       security:
         - mailBoxBasic: []
       summary: "create a new message"
-      description: "Create new message . send data will be set automatically by server as same as statuses "
+      description: "Create new message . send_at value will be calculated"
       operationId: "getMessages"
       produces:
       - "application/json"
@@ -75,7 +74,7 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "Message status fields read , archived"
+          description: "New message payload"
           required: true
           schema:
             $ref: "#/definitions/Message"
@@ -85,7 +84,7 @@ paths:
             location:
               type: string
               format: uri
-              description: 'Path to get created recourse'
+              description: 'Path to get created message'
         401:
           description: Not autorised request
           schema:
@@ -98,8 +97,7 @@ paths:
     get:
       security:
         - mailBoxBasic: []
-      summary: "set archived or read fields "
-      description: ""
+      summary: "set archived or is_read fields"
       produces:
       - "application/json"
       parameters:
@@ -119,8 +117,6 @@ paths:
               description: 'Path to get updated resourse'
           schema:
             $ref: '#/definitions/MessagesResponse'
-        202:
-          description: 'Massage status was changed but new object havent returned'
         304:
           description: 'Message was unchanged'
         headers:
@@ -140,8 +136,6 @@ paths:
       summary: "set archived or read fields "
       security:
         - mailBoxBasic: []
-      description: ""
-      operationId: "pathMessage"
       consumes:
       - "application/json"
       produces:
@@ -161,7 +155,7 @@ paths:
       responses:
         200:
           description: 'Message status updated'
-        204:
+        304:
           description: 'Message was unchanged'
         404:
           description: "Massage not found"
@@ -184,6 +178,9 @@ definitions:
       - $ref: "#/definitions/MessageStatus"
       - type: object
         properties:
+          id:
+            type: integer
+            format: int64
           sender:
             type: string
             minLength: 3
