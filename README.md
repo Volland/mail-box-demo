@@ -132,6 +132,7 @@ It is must have TDD or better BDD . I prefer spec level and e2e test .
 I have seen a lot 95% covered code but still a full of bugs. 
 I prefer a pact integration test and one more docker with 'stimulator' that send a real request over scenario an then check result and compare 
 dockerized DB.
-I still keen to do a popper tests. 
+I still keen to do a popper tests. Dear reviewer . pls follow [Integration Test PR](https://github.com/Volland/mail-box-demo/pull/21)
+ 
  
  
