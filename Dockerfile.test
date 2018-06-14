@@ -1,0 +1,10 @@
+FROM node:9.11.1-alpine
+MAINTAINER Volodymyr Pavlyshyn <pavlyshyn@gmail.com>
+COPY . /opt/mail-box
+WORKDIR /opt/mail-box
+CMD rm -rf node_modules
+CMD npm install
+
+ENV NODE_ENV development
+ENV HOME /tmp
+ENTRYPOINT npm run test

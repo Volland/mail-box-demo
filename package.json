@@ -4,7 +4,7 @@
   "description": "A local firm is building a small E-mail client to manage their internal messaging. You have been asked to implement a basic mailbox API in which the provided messages are listed. Each message can be marked as read and you can archive single messages.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node src/server",
     "dev": "./node_modules/nodemon/bin/nodemon.js -L"
   },
@@ -33,6 +33,9 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "axios": "^0.18.0",
+    "jest": "^23.1.0",
+    "nodemon": "^1.17.5",
+    "request-promise": "^4.2.2"
   }
 }
